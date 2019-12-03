@@ -7,10 +7,10 @@ I'm too lazy to render my own let alone expect it to be maintained.
 https://github.com/styleguidist/react-styleguidist/issues/1218
 
 ```js
-import {greetName} from './greeting.js';
+import * from './uw-word-count.js';
 
-const name = "World";
-const value = greetName({name});
+const text  = "Peace on Earth, good will to men";
+const total = wordCount({name}).total;
 
-<>{value}</>
+<>{total}</>
 ```

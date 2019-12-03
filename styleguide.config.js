@@ -10,12 +10,11 @@ let sections = [
 		content: 'README.md',
 	},
 	{
-		name: 'Greetings',
+		name: 'Word Count',
 		components: () => {
 			const componentNames = [
-				'hello-name',
-				'hello-names-ul',
-				'hello-names-list',
+				'word-count-basic',
+				'word-count-repo',
 			];
 			return componentNames.map(componentName => {
 				const filename = upperFirst(camelCase(componentName));
@@ -26,10 +25,6 @@ let sections = [
 	{
 		name: 'Core',
 		content: 'src/core/README.md',
-	},
-	{
-		name: 'MUI Themes',
-		content: 'src/MuiThemes.md',
 	}
 ];
 

@@ -1,1 +1,1 @@
-export * from './greeting';
+export * from './uw-word-count.js';

@@ -1,33 +1,32 @@
 [![Custom badge](https://img.shields.io/endpoint?color=%2374b9ff&url=https%3A%2F%2Fraw.githubusercontent.com%2unfoldingWord-box3%2Fhello-world-react-component-library%2Fmaster%2Fcoverage%2Fshields.json)]()
-![Lego Blocks](https://forum.door43.org/uploads/default/original/1X/0a2172623a094033c0f609fe36bb08eacdd4fb1b.jpeg)
 
-# Example React Component Library
+# Word Count React Component Library
 
-Read more about why we are focusing on creating component libraries and our approach:
-https://forum.door43.org/t/component-libraries/396
-
-### The Stack
+## The Stack
 
 - Javascript + React (functional components & hooks).
 - MaterialUI for UI/UX baseline design components.
 - Styleguidist for Playground Documentation.
 - Yarn for dependencies, publishing, and deploying.
 - Github + NPM + Github Pages for Hosting.
+- Cypress for testing
 
-There are many alternatives to each layer referenced here. However, many of the alternatives add a great deal of complexity to the initial setup and long term maintenance which prevents it from being practical.
+## Functionality and Limitations
 
-# How to deploy your own?
+To do...
 
-Once you have this codebase forked and cloned to your local machine, you can start modifying the codebase.
-You will need to ensure `node.js` and `yarn` are already installed.
+# How to install
+
+Once you have this codebase forked and cloned to your local machine, you can start modifying the codebase. You will need to ensure `node.js` and `yarn` are already installed.
 
 ### Installation and Running the Styleguide Locally
 
 1. Install the npm dependencies with `yarn`.
 1. Run the Styleguide with `yarn start`.
-1. Ensure that the Styleguide is running by visiting `localhost:6060` on your web browser.
+1. Ensure that the Styleguide is running by visiting `localhost:6060` on your web browser. (for Chromebooks see note below)
 1. Modify the code and documentation in your code editor and check out the Styleguide.
     - Update the styleguide.config.js to match your new component names.
+1. See debug `console.log()` output in browser console -- in chrome, CTRL-SHIFT-J to open.
 
 ### Setting up NPM Publishing
 
@@ -60,7 +59,12 @@ You can optionally deploy the styleguide to GHPages without publishing to NPM.
 1. There is a `predeploy` hook that builds the Styleguide.
 1. That's it!
 
-# Other Resources
+## Chromebook Linux Beta Notes
 
-Here's a great writeup that walks you through a slightly different stack:
-https://itnext.io/how-to-write-your-own-reusable-react-component-library-a57dc7c9a210
+Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.
+
+```
+$ hostname -I
+100.115.92.202 
+$
+```

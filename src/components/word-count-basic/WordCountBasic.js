@@ -3,26 +3,27 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
-import { greetName } from '../../core';
+import { wordCount } from '../../core';
 
-function HelloName({
+function WordCountBasic({
   classes,
-  name,
+  text,
   style,
 }) {
-  const greeting = greetName({name});
+
+  let results = wordCount(text);
   return (
     <Typography className={classes.root} style={style}>
-      {greeting}
+      {results}
     </Typography>
   );
 };
 
-HelloName.propTypes = {
+WordCountBasic.propTypes = {
   /** @ignore */
   classes: PropTypes.object.isRequired,
   /** The name of the person to say hello to. */
-  name: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };
@@ -32,4 +33,4 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(HelloName);
+export default withStyles(styles)(WordCountBasic);
