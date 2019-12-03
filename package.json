@@ -1,0 +1,67 @@
+{
+  "name": "hello-world-react-component-library",
+  "description": "A Collection of Components for Telling the World Hello.",
+  "version": "0.0.6",
+  "private": false,
+  "homepage": "https://unfoldingword-box3.github.io/hello-world-react-component-library/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unfoldingWord-box3/hello-world-react-component-library"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "prepublishOnly": "rm -fr ./dist & babel ./src --out-dir ./dist -s inline",
+    "predeploy": "yarn styleguide:build",
+    "deploy": "gh-pages -d styleguide",
+    "postpublish": "yarn deploy",
+    "start": "styleguidist server",
+    "styleguide:build": "styleguidist build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "nyc:report": "nyc report --reporter=json-summary --reporter=text",
+    "test": "start-test 6060 cypress:run && npm run nyc:report",
+    "create-coverage-badge": "bash scripts/create-badge-json.sh"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.7.0",
+    "cypress": "^3.6.1",
+    "dog-names": "^2.0.0",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-styleguidist": "^9.1.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@cypress/code-coverage": "^1.10.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^5.2.0",
+    "cross-env": "^6.0.3",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "istanbul-lib-coverage": "^2.0.5",
+    "nyc": "^14.1.1",
+    "start-server-and-test": "^1.10.6",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.1"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "main": "dist/index.js",
+  "files": [
+    "dist/*"
+  ]
+}
