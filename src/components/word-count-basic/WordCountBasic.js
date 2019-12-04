@@ -34,8 +34,8 @@ function WordCountBasic({
       </Typography>
       <div>
         <List dense={true}>
-        {results.allWords.map( w => (
-          <ListItem>
+        {results.allWords.map( (w,n) => (
+          <ListItem key={n}>
             <ListItemText primary={w} />
           </ListItem>
       ) ) }
@@ -75,8 +75,6 @@ WordCountBasic.propTypes = {
   /** @ignore */
   classes: PropTypes.object.isRequired,
   /** The name of the person to say hello to. */
-  text: PropTypes.string.isRequired,
-  /** The overriding CSS for this component */
   style: PropTypes.object,
 };
 

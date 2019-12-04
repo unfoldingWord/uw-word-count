@@ -28,7 +28,7 @@ This function returns an object with the following attributes:
 - `total`: the total number of words (or length of the array)
 - `distinct`: the number of unique words
 - `allWords`: the array/list of words found
-- `wordFrequency`: an object listing the words and count of each word
+- `wordFrequency`: an object listing the words and occurences of each word
 - `l1count`: the number of Markdown Level 1 headings
 
 ## Examples
