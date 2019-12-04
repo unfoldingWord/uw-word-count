@@ -1,4 +1,4 @@
-## greetName({name})
+## Word Count Sandbox
 
 This non-component function can also have a playground to test it out.
 

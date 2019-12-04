@@ -49,7 +49,7 @@ export function wordCount(str) {
     const allWords = getMdWords(str);
     counts["total"] = allWords.length;
     counts["distinct"] = [...new Set(allWords)].length;
-    let l1count = str.replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
+    let l1count = str.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
     counts["l1count"] = l1count.length;
     counts["allWords"] = allWords;
     let wordFrequency_map = new Map();

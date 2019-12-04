@@ -14,7 +14,6 @@ let sections = [
 		components: () => {
 			const componentNames = [
 				'word-count-basic',
-				'word-count-repo',
 			];
 			return componentNames.map(componentName => {
 				const filename = upperFirst(camelCase(componentName));
