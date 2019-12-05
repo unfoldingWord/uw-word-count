@@ -1,8 +1,19 @@
 ## Component Description
 
 This component takes a string as input, pre-processes the string, and 
-finally counting all the words. Review the source code for all the 
-pre-processing that is performed. Here are selected examples:
+finally counts all the words. Review the source code for all the 
+pre-processing that is performed for each format. 
+
+This component also supports an optional format property. The default
+is `markdown`. As of this writing, supported formats are:
+
+- `markdown`
+- `string`
+
+Support is planned for `usfm` and `utn` 
+(a Tab Separated Value (TSV) format used for translation notes).
+
+Here are selected pre-processing examples for Markdown:
 - All links, image refs, embedded HTML are removed.
 - In order to treat Scripture references (3:16), time (4:00), 
 and floating point numbers as one "word", the colon and periods are changed
@@ -30,6 +41,8 @@ This function returns an object with the following attributes:
 - `allWords`: the array/list of words found
 - `wordFrequency`: an object listing the words and occurences of each word
 - `l1count`: the number of Markdown Level 1 headings
+- `validFormats`: list of supported formats
+- `isValidFormat`: a Boolean indicating whether the passed format is supported
 
 ## Examples
 
@@ -38,7 +51,7 @@ This function returns an object with the following attributes:
 The first example is a simple text string.
 
 ```js
-<WordCountBasic>
+<WordCountBasic format='string'>
 To be or not to be.
 </WordCountBasic>
 ```
@@ -49,7 +62,7 @@ Note that in order to preserve line endings, the text must be wrapped in a JavaS
 to make it an expression.
 
 ```js
-<WordCountBasic>
+<WordCountBasic format='markdown'>
 {`
 # Heading 1
 

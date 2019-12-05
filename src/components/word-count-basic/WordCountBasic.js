@@ -15,12 +15,24 @@ import TableRow from '@material-ui/core/TableRow';
 import { wordCount } from '../../core';
 
 function WordCountBasic({
+  format,
   classes,
   children,
   style,
 }) {
 
-  let results = wordCount(children);
+  console.log("format:",format); // format='xxx' format='string'
+  let results = wordCount(children,format);
+  if ( ! results.isValidFormat ) {
+    return (
+      <Typography className={classes.root} style={style} 
+        align='center' variant='h6'>
+      Invalid format: {format} <br/>
+      Valid formats are: {results.validFormats} <br/>
+      Default is 'markdown'
+      </Typography>
+    )
+  }
   return (
     <Paper className={classes.paper}>
       <Typography className={classes.root} style={style}>
@@ -74,8 +86,10 @@ function WordCountBasic({
 WordCountBasic.propTypes = {
   /** @ignore */
   classes: PropTypes.object.isRequired,
-  /** The name of the person to say hello to. */
+  /** @ignore */
   style: PropTypes.object,
+  /** text format: default is Markdown */
+  format: PropTypes.string,
 };
 
 const styles = theme => ({
