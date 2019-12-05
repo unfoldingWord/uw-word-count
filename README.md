@@ -13,7 +13,7 @@
 
 ## Functionality and Limitations
 
-To do...
+See component `README` for details.
 
 # How to install
 
@@ -61,7 +61,7 @@ You can optionally deploy the styleguide to GHPages without publishing to NPM.
 
 ## Chromebook Linux Beta Notes
 
-Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.
+Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.**
 
 ```
 $ hostname -I

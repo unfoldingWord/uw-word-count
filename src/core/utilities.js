@@ -9,7 +9,7 @@ export const map_to_obj = ( mp => {
 });
 
 // function to convert object to a map
-const obj_to_map = ( ob => {
+export const obj_to_map = ( ob => {
     const mp = new Map();
     Object.keys ( ob ).forEach (k => { mp.set(k, ob[k]) });
     return mp;

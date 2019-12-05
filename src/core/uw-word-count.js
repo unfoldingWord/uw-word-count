@@ -37,10 +37,10 @@ function getUsfmWords(usfm) {
                 //if ( k1 === "front" ) continue;
             //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
-            var verse_map = obj_to_map(v1);
+            var verse_map = util.obj_to_map(v1);
             for (var v2 of verse_map.values()) {
                 for (var i=0; i < v2.length; i++) {
-                    var verse_obj_map = obj_to_map(v2[i]);
+                    var verse_obj_map = util.obj_to_map(v2[i]);
                     // unaligned text method
                     if ( verse_obj_map.has("text") ) {
                         words.push(
@@ -168,7 +168,7 @@ export function wordCount(str,format) {
     } else if (sformat === 'usfm' ) {
         allWords = getUsfmWords(str);
     }
-    
+
     counts["total"] = allWords.length;
     counts["distinct"] = [...new Set(allWords)].length;
     let l1count = str.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
