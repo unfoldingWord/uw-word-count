@@ -68,9 +68,6 @@ function getUsfmWords(usfm) {
 }
 
 
-
-    
-
 // Find words in Markdown text
 function getMdWords(str) {
     let s = str;
@@ -106,7 +103,7 @@ function getMdWords(str) {
     return s.toLowerCase().match(/\S+/g) || [];
 }
 
-// Find words in text
+// Find words in plain text (no markup)
 function getWords(str) {
     let s = str;
     // replace ellipses with a blank
@@ -141,7 +138,7 @@ export function wordCount(str,format) {
 
 
     // default type is Markdown
-    const validFormats = ['markdown', 'string']
+    const validFormats = ['markdown', 'string', 'usfm']
     let sformat = format;
     if ( sformat === undefined || sformat === '' ) {
         sformat = "markdown"
@@ -168,7 +165,10 @@ export function wordCount(str,format) {
         allWords = getMdWords(str);
     } else if (sformat === 'string' ) {
         allWords = getWords(str);
+    } else if (sformat === 'usfm' ) {
+        allWords = getUsfmWords(str);
     }
+    
     counts["total"] = allWords.length;
     counts["distinct"] = [...new Set(allWords)].length;
     let l1count = str.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
