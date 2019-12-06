@@ -1,7 +1,7 @@
-import usfmjs from 'usfm-js';
+//import usfmjs from 'usfm-js';
 import * as util from './utilities';
 
-
+/*
 function process_tags(v3,words,level) {
     for (var j=0; j < v3.length; j++) {
         let children_map = util.obj_to_map(v3[j]);
@@ -32,10 +32,7 @@ function getUsfmWords(usfm) {
         // where key is verse number
         // and value is an array of verse objects
         var verses_map = util.obj_to_map(v);
-        //for (var [k1,v1] of verses_map.entries()) {
         for (var v1 of verses_map.values()) {
-                //if ( k1 === "front" ) continue;
-            //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
             var verse_map = util.obj_to_map(v1);
             for (var v2 of verse_map.values()) {
@@ -66,7 +63,7 @@ function getUsfmWords(usfm) {
     // in the order they were found
     return getWords(words.join('\n'));
 }
-
+*/
 
 // Find words in Markdown text
 function getMdWords(str) {
@@ -166,7 +163,7 @@ export function wordCount(str,format) {
     } else if (sformat === 'string' ) {
         allWords = getWords(str);
     } else if (sformat === 'usfm' ) {
-        allWords = getUsfmWords(str);
+        //allWords = getUsfmWords(str);
     }
 
     counts["total"] = allWords.length;

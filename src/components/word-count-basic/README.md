@@ -113,7 +113,7 @@ __this is a test__
 The first two verses of the Book Jude are used for this example.
 
 ```js
-<WordCountBasic format='usfm'>
+<WordCountBasic format='string'>
 \id JUD EN_ULT en_English_ltr Thu Jun 13 2019 11:54:01 GMT-0400 (EDT) tc
 \usfm 3.0
 \ide UTF-8

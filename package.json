@@ -34,8 +34,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-styleguidist": "^9.1.14",
-    "usfm-js": "^2.0.0"
+    "react-styleguidist": "^9.1.14"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
