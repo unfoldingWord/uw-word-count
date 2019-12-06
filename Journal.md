@@ -51,3 +51,45 @@ do\Projects\unfoldingWord\uw-word-count\src\components\word-count-basic'
 Module not found: Can't resolve 'core-js/modules/es.array.from' in 'C:\Users\man
 do\Projects\unfoldingWord\uw-word-count\src\core'
 ```
+1. Again commented out line in `babel.config.js`: `//useBuiltIns: 'usage',`
+1. Now it compiles and everything works ok locally with `yarn start`.
+1. Committed and pushed working version.
+1. Did a `yarn deploy` to rebuild the the Github pages.
+1. Finally retried to publish --- it worked (with warning)... why???
+```
+$ yarn publish
+yarn publish v1.19.2
+[1/4] Bumping version...
+info Current version: 0.0.1
+question New version:
+[2/4] Logging in...
+info npm username: mandolyte
+info npm email: cecil.new@gmail.com
+question npm password:
+success Logged in.
+[3/4] Publishing...
+$ rm -fr ./dist & babel ./src --out-dir ./dist -s inline
+
+The `corejs` option only has an effect when the `useBuiltIns` option is not `fal
+se`
+
+Successfully compiled 7 files with Babel.
+$ yarn deploy
+yarn run v1.19.2
+$ yarn styleguide:build
+$ styleguidist build
+Building style guide...
+
+The `corejs` option only has an effect when the `useBuiltIns` option is not `fal
+se`
+
+Style guide published to:
+C:\Users\mando\Projects\unfoldingWord\uw-word-count\styleguide
+$ gh-pages -d styleguide
+Published
+Done in 18.36s.
+success Published.
+[4/4] Revoking token...
+success Revoked login token.
+Done in 51.76s.
+```

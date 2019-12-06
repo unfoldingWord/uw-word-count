@@ -180,6 +180,7 @@ export function wordCount(str,format) {
     }
     let wordFrequency = util.map_to_obj(wordFrequency_map);
     counts["wordFrequency"] = wordFrequency;
+    console.log("wf_to_mt", util.wf_to_mt(wordFrequency));
     return counts;
 }
 

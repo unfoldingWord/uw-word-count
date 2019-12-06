@@ -1,7 +1,7 @@
 {
   "name": "uw-word-count",
   "description": "Components for Counting Words.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "homepage": "https://unfoldingword.github.io/uw-word-count/",
   "repository": {
@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.7.0",
+    "@material-ui/icons": "^4.7.0",
+    "material-table": "^1.51.1",
     "cypress": "^3.6.1",
     "dog-names": "^2.0.0",
     "lodash": "^4.17.15",
