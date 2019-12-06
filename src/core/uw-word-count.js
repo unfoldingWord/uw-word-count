@@ -64,7 +64,7 @@ function getUsfmWords(usfm) {
     }
     // return the array of all words found
     // in the order they were found
-    return words;
+    return getWords(words.join('\n'));
 }
 
 
