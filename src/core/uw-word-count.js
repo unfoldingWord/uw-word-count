@@ -1,7 +1,7 @@
-//import usfmjs from 'usfm-js';
+import usfmjs from 'usfm-js';
 import * as util from './utilities';
 
-/*
+
 function process_tags(v3,words,level) {
     for (var j=0; j < v3.length; j++) {
         let children_map = util.obj_to_map(v3[j]);
@@ -63,7 +63,7 @@ function getUsfmWords(usfm) {
     // in the order they were found
     return getWords(words.join('\n'));
 }
-*/
+
 
 // Find words in Markdown text
 function getMdWords(str) {
@@ -163,7 +163,7 @@ export function wordCount(str,format) {
     } else if (sformat === 'string' ) {
         allWords = getWords(str);
     } else if (sformat === 'usfm' ) {
-        //allWords = getUsfmWords(str);
+        allWords = getUsfmWords(str);
     }
 
     counts["total"] = allWords.length;
