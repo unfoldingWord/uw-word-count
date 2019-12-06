@@ -2,6 +2,8 @@
 
 # Word Count React Component Library
 
+GH Pages: https://unfoldingword.github.io/uw-word-count/
+
 ## The Stack
 
 - Javascript + React (functional components & hooks).
