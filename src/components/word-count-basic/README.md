@@ -9,8 +9,9 @@ is `markdown`. As of this writing, supported formats are:
 
 - `markdown`
 - `string`
+- `usfm`
 
-Support is planned for `usfm` and `utn` 
+Support is planned for `utn` 
 (a Tab Separated Value (TSV) format used for translation notes).
 
 Here are selected pre-processing examples for Markdown:
