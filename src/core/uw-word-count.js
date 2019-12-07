@@ -1,6 +1,18 @@
 import usfmjs from 'usfm-js';
 import * as util from './utilities';
 
+function getUtnWords(utn_tsv) {
+    let rows = utn_tsv.trim().split('\n').map(row => row.trim().split('\t'));
+    let text = [];
+    for (let i=1; i < rows.length; i++) {
+        text.push(rows[i][8]);
+    }
+    let alltext = text.join('\n');
+    return [getMdWords(alltext), 
+        alltext.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || []
+    ];
+}
+
 
 function process_tags(v3,words,level) {
     for (var j=0; j < v3.length; j++) {
@@ -135,7 +147,7 @@ export function wordCount(str,format) {
 
 
     // default type is Markdown
-    const validFormats = ['markdown', 'string', 'usfm']
+    const validFormats = ['markdown', 'string', 'usfm', 'utn']
     let sformat = format;
     if ( sformat === undefined || sformat === '' ) {
         sformat = "markdown"
@@ -158,17 +170,20 @@ export function wordCount(str,format) {
         return counts;
     }
 
+    let l1count = [];
     if ( sformat === 'markdown' ) {
         allWords = getMdWords(str);
+        l1count = str.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
     } else if (sformat === 'string' ) {
         allWords = getWords(str);
     } else if (sformat === 'usfm' ) {
         allWords = getUsfmWords(str);
+    } else if (sformat === 'utn' ) {
+        [allWords,l1count] = getUtnWords(str);
     }
 
     counts["total"] = allWords.length;
     counts["distinct"] = [...new Set(allWords)].length;
-    let l1count = str.trim().replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
     counts["l1count"] = l1count.length;
     counts["allWords"] = allWords;
     let wordFrequency_map = new Map();
@@ -180,7 +195,6 @@ export function wordCount(str,format) {
     }
     let wordFrequency = util.map_to_obj(wordFrequency_map);
     counts["wordFrequency"] = wordFrequency;
-    console.log("wf_to_mt", util.wf_to_mt(wordFrequency));
     return counts;
 }
 

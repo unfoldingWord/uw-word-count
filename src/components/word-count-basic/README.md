@@ -163,3 +163,25 @@ The first two verses of the Book Jude are used for this example.
 \w you|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*.
 </WordCountBasic>
 ```
+
+### UTN Example
+
+The first two verses of the Titus Translation Notes are used for this example. Note that the Tab Separated Value text must be wrapped in backticks and then wrapped in curly braces.
+
+```js
+<WordCountBasic format='utn'>
+{`
+Book	Chapter	Verse	ID	SupportReference	OrigQuote	Occurrence	GLQuote	OccurrenceNote
+TIT	front	intro	m2jl			0		# Introduction to Titus<br><br>## Part 1: General Introduction<br><br>### Outline of the Book of Titus<br><br>1. Paul instructs Titus to appoint godly leaders (1:1-16)<br>1. Paul instructs Titus to train people to live godly lives (2:1-3:11)<br>1. Paul ends by sharing some of his plans and sending greetings to various believers (3:12-15)<br><br>### Who wrote the Book of Titus?<br><br>Paul wrote the Book of Titus. Paul was from the city of Tarsus. He had been known as Saul in his early life. Before becoming a Christian, Paul was a Pharisee. He persecuted Christians. After he became a Christian, he traveled several times throughout the Roman Empire telling people about Jesus.<br><br>### What is the Book of Titus about?<br><br>Paul wrote this letter to Titus, his fellow worker, who was leading the churches on the island of Crete. Paul instructed him about selecting church leaders. Paul also described how the believers should behave towards each other. He also encouraged them all to live in a way that pleases God.<br><br>### How should the title of this book be translated?<br><br>Translators may choose to call this book by its traditional title, ***Titus.*** Or they may choose a clearer title, such as ***Paul’s Letter to Titus*** or ***A Letter to Titus.*** (See: [[rc://en/ta/man/translate/translate-names]])<br><br>## Part 2: Important Religious and Cultural Concepts<br><br>### In what roles can people serve within the church?<br><br>There are some teachings in the Book of Titus about whether a woman or divorced man can serve in positions of leadership within the church. Scholars disagree about the meaning of these teachings. Further study on these issues may be necessary before translating this book.<br><br>## Part 3: Important Translation Issues<br><br>### Singular and plural **you**<br><br>In this book, the word **I** refers to Paul. Also, the word **you** is almost always singular and refers to Titus. The exception to this is 3:15. (See: [[rc://en/ta/man/translate/figs-exclusive]] and [[rc://en/ta/man/translate/figs-you]])<br><br>### What is the meaning of **God our Savior?**<br><br>This is a common phrase in this letter. Paul meant to make the readers think about how God forgave them in Christ for sinning against him, and by forgiving them he saved them from being punished when he judges all people. A similar phrase in this letter is **our great God and Savior Jesus Christ.**
+TIT	1	intro	c7me			0		# Titus 01 General Notes<br><br>## Structure and formatting<br><br>Paul formally introduces this letter in verses 1-4. Writers often began letters in this way in the ancient Near East.<br><br>In verses 6-9, Paul lists several qualities that a man must have if he is to be an elder in the church. (See: rc://en/ta/man/translate/figs-abstractnouns) Paul gives a similar list in 1 Timothy 3.<br><br>## Special concepts in this chapter<br><br>### Elders<br><br>The church has used different titles for church leaders. Some titles include overseer, elder, pastor, and bishop.<br><br>## Other possible translation difficulties in this chapter<br><br>### Should, may, must<br><br>The ULT uses different words that indicate requirements or obligations. These verbs have different levels of force associated with them. The subtle differences may be difficult to translate. The UST translates these verbs in a more general way.
+TIT	1	1	rtc9		κατὰ πίστιν	1	for the faith	***to strengthen the faith***
+TIT	1	1	xyz8	figs-abstractnouns	ἐπίγνωσιν ἀληθείας	1	knowledge of the truth	**knowledge** and **truth** are abstract nouns. See the UST for other ways to express these. Paul wants people to know the true message about God and Christ so that they can belong to God. (See: [[rc://en/ta/man/translate/figs-abstractnouns]])
+TIT	1	1	fyf8		τῆς κατ’ εὐσέβειαν	1	that agrees with godliness	***that is suitable for honoring God***
+TIT	1	2	xyz9		ἐπ’ ἐλπίδι ζωῆς αἰωνίου	1	with the certain hope of everlasting life	***that gives us the certain hope of everlasting life*** or ***based on our certain hope for everlasting life***
+TIT	1	2	r2gj		πρὸ χρόνων αἰωνίων	1	before all the ages of time	***before time began***
+
+
+
+`}
+</WordCountBasic>
+```
