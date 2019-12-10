@@ -23,7 +23,7 @@ https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor/01.md
 
 These would be rules:
 
-- If the URL is to the repo, then the resource type would be used to qualify what is counted. For example for en_ta, only the folder translate would be counted. The other folders would be ignored. In some other cases, only the content folder would be counted.
+- If the URL is to the repo, then the resource type would be used to qualify what is counted. For example for en_ta, only the folder translate would be counted. The other folders would be ignored.
 - If the URL is to a folder within a repo, then the folder would be recursively processed and each "qualifying" file type counted.
 - A "qualifying" file type is one that has the expected extension for the type of resource.
   - UTA, UTW: type is ".md"
@@ -82,7 +82,7 @@ Whereas an invalid repo yields:
 
 The valid return includes the commit hash of the master branch, which will be used in the following.
 
-**Part 2** Validate the path
+**Part 3** Validate the path
 
 The last step is to validate the path, if one is provided. This is done by using the Giteas `trees` API. 
 
@@ -180,3 +180,16 @@ All files must be fetched and the text aggregated for subsequent counting.
 ### Case 3: URL points to a file
 
 The case for an individual file is a subset of the above.
+
+## Caching Strategy
+
+The "cache" will be either `localStorage` or `sessionStorage`. The cache will be consulted before a file is fetched to see if it is already present. If so, return from cache instead of fetching.
+
+The process to maintain the cache is as follows. The word "store" is used to describe storage in either `localStorage` or `sessionStorage`. 
+
+- Store the `trees` output with a key being the name of the repo.
+- If repo commit hash is not current (from the `branches` API), then refresh the tree.
+- Store all files using the SHA as the key.
+- If the SHA is present in storage return stored copy; otherwise fetch then store.
+
+
