@@ -1,5 +1,17 @@
 # Journal
 
+## 2019-12-10
+
+At this point the "basic" word count logic is complete with support for:
+- Markdown
+- USFM
+- UTN TSV
+- arbitrary strings
+
+Today begin work on the "repo" component. This component will allow a
+URL to be supplied, the data fetched at that URL, then the words counted
+in that data.
+
 ## 2019-12-06
 
 Began working on `yarn publish` problem:

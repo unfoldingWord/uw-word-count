@@ -22,6 +22,18 @@ let sections = [
 		}
 	},
 	{
+		name: 'Repo Count',
+		components: () => {
+			const componentNames = [
+				'word-count-repo',
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/${componentName}`, `${filename}.js`)
+			});
+		}
+	},
+	{
 		name: 'Core',
 		content: 'src/core/README.md',
 	}
