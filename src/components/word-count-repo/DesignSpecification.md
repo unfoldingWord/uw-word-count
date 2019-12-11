@@ -140,7 +140,7 @@ Some resource types in the repos have special root folders that have the content
 
 If only the repo is provided and the content is in a folder, then only that folder will be fetched and counted.
 
-Furthermore, each resource type have a document authoring format. For example, Markdown `.md` is used for UTQ. Thus only Markdown files will be fetched and counted.
+Furthermore, each resource type has a document authoring format. For example, Markdown `.md` is used for UTQ. Thus only Markdown files will be fetched and counted.
 
 All files must be fetched and the text aggregated for subsequent counting.
 The fetching and counting process is explained in more detail below.
@@ -183,13 +183,13 @@ The case for an individual file is a subset of the above.
 
 ## Caching Strategy
 
-The "cache" will be either `localStorage` or `sessionStorage`. The cache will be consulted before a file is fetched to see if it is already present. If so, return from cache instead of fetching.
+The "cache" will be either `localStorage` or `sessionStorage`. The cache will be consulted before a file is fetched to see if it is already present. If so, the file will be returned from cache instead of fetching.
 
 The process to maintain the cache is as follows. The word "store" is used to describe storage in either `localStorage` or `sessionStorage`. 
 
 - Store the `trees` output with a key being the name of the repo.
-- If repo commit hash is not current (from the `branches` API), then refresh the tree.
+- If repo commit hash is not current (from the `branches` API) or the `trees` data for the repo doesn't exist, then fetch the tree.
 - Store all files using the SHA as the key.
-- If the SHA is present in storage return stored copy; otherwise fetch then store.
+- If the SHA is present in storage return stored copy; otherwise fetch the data, then store.
 
 
