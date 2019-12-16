@@ -31,7 +31,8 @@ These would be rules:
   - UTN is ".tsv" and only column 8 (? confirm)
   - OBS looks like ".md"; possibly the other OBS resources are too?
 
-Finally, the URLs will be constrained to point to DCS repos owned by `unfoldingWord`.
+Finally, the URLs will be constrained to point to any DCS repo; in other
+words the URL must begin with `git.door43.org`
 
 
 ## Specification
@@ -49,7 +50,8 @@ There are three cases to handle:
 **Part 1** Validate DCS and `unfoldingWord` ownership
 
 The first step is to validate the URL. Given the owner constraint, we can simply test that the URL begins with:
-`https://git.door43.org/unfoldingWord/`
+`https://git.door43.org/`.
+The URL scheme (`https://`) is not required.
 
 
 **Part 2** Validate the repo
@@ -167,7 +169,7 @@ This returns the file in a JSON object:
 }
 ```
 
-The `content` property contains the file in a base64-encoded form. Decoded the file is a small Markdown document:
+The `content` property contains the file in a base64-encoded form. Decoded, the file is a small Markdown document:
 
 ```
 # Who was the first conqueror on the earth?
@@ -189,7 +191,56 @@ The process to maintain the cache is as follows. The word "store" is used to des
 
 - Store the `trees` output with a key being the name of the repo.
 - If repo commit hash is not current (from the `branches` API) or the `trees` data for the repo doesn't exist, then fetch the tree.
-- Store all files using the SHA as the key.
+- Store all blobs/files using the SHA as the key.
 - If the SHA is present in storage return stored copy; otherwise fetch the data, then store.
 
+## Detailed Logic
 
+This section is written in a pseudo-code form, showing at a high level
+the logic used to identify, fetch, count, and display results.
+
+### Identity
+
+- Input: from the UI a URL to a `git.door43.org` repository.
+- Output: an array of document blob URLs for qualifying blobs
+  - Note 1: the array must actually be an object containg the blob URL and the path, which is needed for display of results in the UI
+
+Processing: of URL to find all qualifying documents.
+
+1. Isolate the owner and repo elements from the URL.
+1. Use the `branches` Gitea API to obtain repo information about the master branch.
+1. If not a valid owner or repo, return error message.
+1. Extract the master branch commit id: `[0].commit.id`
+1. If storage does not have an item named by the commit id, then:
+  1. Use the Gitea `trees` API to fetch the repo content metadata
+  1. Store the result using the id as the item key
+1. If URL points to entire repo, return all blob URLs for type `blobs` in an array
+1. If URL points to a path, return all matches on path. The returned array is, as above, all the blob URLs for type blobs
+1. If no matches found return an empty array
+
+### Fetch and Count
+
+- Input: array of blob URLs to fetch and count
+- Output:
+  - if error encountered, return error message
+  - array of 
+
+Processing: storage of all documents with counts added.
+
+1. Iterate thru the array fetching all file blobs
+2. Decode each blob to extract the content to count
+3. Do a word count on the content
+4. Add the word count properties to the content blob and re-store
+
+
+### Display
+
+- Input: array of objects containing path and blob URL
+- Output: display of totals and per-file counts
+
+Processing: display of counts
+
+1. Iterate thru all files, aggregating all text
+2. Do a word count on aggregated text
+3. Show the word count totals
+4. Show per-file word count details

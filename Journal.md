@@ -1,5 +1,11 @@
 # Journal
 
+## 2019-12-11
+
+Begin study of Cypress.
+- Cypress comes with its own version of Chrome used to run tests
+- `npx cypress open` opens the cypress window.
+
 ## 2019-12-10
 
 At this point the "basic" word count logic is complete with support for:
