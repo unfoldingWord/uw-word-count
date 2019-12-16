@@ -196,10 +196,10 @@ The process to maintain the cache is as follows. The word "store" is used to des
 
 ## Detailed Logic
 
-This section is written in a pseudo-code form, showing at a high level
+This section showd at a high level
 the logic used to identify, fetch, count, and display results.
 
-### Identity
+### Identify
 
 - Input: from the UI a URL to a `git.door43.org` repository.
 - Output: an array of document blob URLs for qualifying blobs
@@ -212,18 +212,18 @@ Processing: of URL to find all qualifying documents.
 1. If not a valid owner or repo, return error message.
 1. Extract the master branch commit id: `[0].commit.id`
 1. If storage does not have an item named by the commit id, then:
-  1. Use the Gitea `trees` API to fetch the repo content metadata
-  1. Store the result using the id as the item key
+    1. Use the Gitea `trees` API to fetch the repo content metadata
+    1. Store the result using the id as the item key
 1. If URL points to entire repo, return all blob URLs for type `blobs` in an array
 1. If URL points to a path, return all matches on path. The returned array is, as above, all the blob URLs for type blobs
 1. If no matches found return an empty array
 
 ### Fetch and Count
 
-- Input: array of blob URLs to fetch and count
+- Input: array of path and blob URLs to fetch and count
 - Output:
   - if error encountered, return error message
-  - array of 
+  - array of path and SHAs
 
 Processing: storage of all documents with counts added.
 
@@ -235,12 +235,12 @@ Processing: storage of all documents with counts added.
 
 ### Display
 
-- Input: array of objects containing path and blob URL
+- Input: array of objects containing path and SHA
 - Output: display of totals and per-file counts
 
 Processing: display of counts
 
-1. Iterate thru all files, aggregating all text
+1. Iterate thru all files (using SHA as item key in storage), aggregating all text
 2. Do a word count on aggregated text
 3. Show the word count totals
 4. Show per-file word count details
