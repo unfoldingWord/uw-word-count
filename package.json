@@ -27,8 +27,8 @@
     "create-coverage-badge": "bash scripts/create-badge-json.sh"
   },
   "dependencies": {
-    "@material-ui/core": "^4.7.0",
-    "@material-ui/icons": "^4.7.0",
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
     "material-table": "^1.51.1",
     "cypress": "^3.6.1",
     "dog-names": "^2.0.0",
@@ -37,6 +37,11 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-styleguidist": "^9.1.14",
+    "axios": "^0.18.0",
+    "axios-cache-adapter": "^2.2.1",
+    "js-yaml-parser": "^1.0.0",
+    "jszip": "^3.2.0",
+    "localforage": "^1.7.3",
     "usfm-js": "^2.0.0"
   },
   "devDependencies": {

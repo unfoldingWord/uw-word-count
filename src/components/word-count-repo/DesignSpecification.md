@@ -53,45 +53,22 @@ The first step is to validate the URL. Given the owner constraint, we can simply
 `https://git.door43.org/`.
 The URL scheme (`https://`) is not required.
 
+**Part 2** Validate the repo and path
 
-**Part 2** Validate the repo
+First parse the URL to obtain the owner and repo names.
 
-The second step is to validate the repo exists. This may be done using
-the `branches` Gitea API. For example, if the repo is `en_tq`, here is
-the transcript:
+Form the URL to make a `trees` API call (see `curl` below) for the master branch.
 
-```
-$ curl -X GET "https://git.door43.org/api/v1/repos/unfoldingword/en_tq/branches" -H "accept: application/json"
-[
-  {
-    "name": "master",
-    "commit": {
-      "id": "2f88d4faca2dd39fe87a4c98dd1a5fdf82cea5b3",
-      "message": "Updated Jonah questions to ULT (#24)\n",
-      "url": "https://git.door43.org/unfoldingWord/en_tq/commit/2f88d4faca2dd39fe87a4c98dd1a5fdf82cea5b3",
-
-... elided ...
-
-  }
-]
-```
-
-Whereas an invalid repo yields:
+An invalid repo yields:
 
 ```
 {"documentation_url":"https://git.door43.org/api/swagger","errors":null,"message":"Not Found"}
 ```
 
-The valid return includes the commit hash of the master branch, which will be used in the following.
-
-**Part 3** Validate the path
-
-The last step is to validate the path, if one is provided. This is done by using the Giteas `trees` API. 
-
-Below is a transcript. Note the use of the commit hash as part of the GET.
+A valid repo returns as shown below.
 
 ```sh
-$ curl -X GET "https://git.door43.org/api/v1/repos/unfoldingword/en_tq/git/trees/2f88d4faca2dd39fe87a4c98dd1a5fdf82cea5b3?recursive=true&per-page=100000" -H "accept: application/json"
+$ curl -X GET "https://git.door43.org/api/v1/repos/unfoldingword/en_tq/git/trees/master?recursive=true&per-page=100000" -H "accept: application/json"
 ```
 With output:
 ```json
@@ -130,7 +107,7 @@ With output:
 ... elided ...
 ```
 
-The path provided must be a path in the `trees` result. If not found, then a suitable error message is shown.
+The input path provided must be a path in the `trees` result. If not found, then a suitable error message is shown.
 
 ### Case 1: URL points to repo
 
@@ -198,6 +175,17 @@ The process to maintain the cache is as follows. The word "store" is used to des
 
 This section showd at a high level
 the logic used to identify, fetch, count, and display results.
+
+Here is a concise statement:
+
+1. Extract the owner/repo from input URL 
+2. Use trees API on the repo (call this the repo tree)
+3. Validate the input URL against the repo tree
+4. While validating collect all matching URLs that need to be fetched/counted
+5. Fetch all the URLs and ...
+6. Store all the content somewhere so it can be aggregated later for the totals
+7. Once all content is retrieved, iterate over it, saving somewhere for display both the totals across all matching content and per-file totals 
+8. Finally, using computed results, display in UI
 
 ### Identify
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+//import Paper from '@material-ui/core/Paper';
+//import Typography from '@material-ui/core/Typography';
+import {fetchWordCountRepo} from './helpers';
 
 
 function WordCountRepo({
@@ -15,25 +16,11 @@ function WordCountRepo({
   const [res, setVal] = useState("Waiting-WordCountRepo");
   useEffect( () => {
     const fetchData = async () => {
-      const result = await fetchWordCountRepo(
-        {username: 'unfoldingword', languageId:'en', url: url}
-      );
+      const result = await fetchWordCountRepo({ url: url });
       setVal(
-        <Paper className={classes.paper}>
-          <Typography variant="h6" gutterBottom>
-            Translation Questions for "{bookId.toUpperCase()}" 
-            and Chapters {chlist}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            Total Number of Questions: {result.l1count}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            Total Word Count {result.total}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            Unique Words {result.distinct}
-          </Typography>
-        </Paper>
+        <div>
+          <pre>{result}</pre>
+        </div>
       );  
     };
     fetchData();
@@ -43,7 +30,7 @@ function WordCountRepo({
 
   return (
     <div className={classes.root}>
-      {_tq}
+      {res}
     </div>
   );
 };
