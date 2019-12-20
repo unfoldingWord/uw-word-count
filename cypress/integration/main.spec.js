@@ -22,7 +22,7 @@ describe('Word Count Tests', function () {
     .should('have.text','2')
   })
 
-  it('Should find 58 words in text', function() {
+  it('Should find 58 words in Markdown text', function() {
     // first click to the WordCountBasic component
     cy.get(':nth-child(2) > .rsg--list-54 > .rsg--item-55 > .rsg--link-25')
     .click()
@@ -30,5 +30,27 @@ describe('Word Count Tests', function () {
     // get the text from the pagination, looking for 
     cy.get('[data-testid=WordCountBasic-example-3] > .rsg--preview-42 > :nth-child(1) > .MuiPaper-elevation1 > :nth-child(2) > :nth-child(3) > .MuiTableFooter-root > .MuiTableRow-root > .MuiTableCell-root > .MuiToolbar-root > .MTablePaginationInner-root-204 > .MuiTypography-root')
     .should('have.text','1-5 of 58')
+  })
+
+  it('Should find 35 words in USFM text', function() {
+    // first click to the WordCountBasic component
+    cy.get(':nth-child(2) > .rsg--list-54 > .rsg--item-55 > .rsg--link-25')
+    .click()
+
+    // get the text from the pagination, looking for 
+    cy.get('[data-testid=WordCountBasic-example-5] > .rsg--preview-42 > :nth-child(1) > .MuiPaper-elevation1 > :nth-child(2) > :nth-child(3) > .MuiTableFooter-root > .MuiTableRow-root > .MuiTableCell-root > .MuiToolbar-root > .MTablePaginationInner-root-204 > .MuiTypography-root'
+    )
+    .should('have.text','1-5 of 35')
+  })
+
+  it('Should find 565 words in UTN (column 8) text', function() {
+    // first click to the WordCountBasic component
+    cy.get(':nth-child(2) > .rsg--list-54 > .rsg--item-55 > .rsg--link-25')
+    .click()
+
+    // get the text from the pagination, looking for 
+    cy.get('[data-testid=WordCountBasic-example-7] > .rsg--preview-42 > :nth-child(1) > .MuiPaper-elevation1 > :nth-child(2) > :nth-child(3) > .MuiTableFooter-root > .MuiTableRow-root > .MuiTableCell-root > .MuiToolbar-root > .MTablePaginationInner-root-204 > .MuiTypography-root'
+    )
+    .should('have.text','1-5 of 565')
   })
 })
