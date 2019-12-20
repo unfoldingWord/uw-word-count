@@ -165,8 +165,8 @@ export async function repositoryExists({username, repository}) {
 };
 
 export async function get({uri, params}) {
-  const {data} = await api.get(uri, { params });
-  //console.log("get():",data);
+  console.log("get() uri,params:",uri,params);
+  const {data} = await api.get(baseURL+uri, { params });
   return data;
 };
 
@@ -231,6 +231,7 @@ export async function fetchTree({username, repository, sha='master'}) {
 };
 
 export async function recursiveTree({username, repository, path, sha}) {
+  console.log("recurse tree args:",username,repository,path,sha)
   let tree = {};
   const pathArray = path.split();
   const results = fetchTree({username, repository, sha});

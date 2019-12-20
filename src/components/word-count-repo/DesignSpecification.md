@@ -1,41 +1,12 @@
 # Design Specification for the Repo Word Count Component
 
-## Requirements
-
-Original requirements were given [here](https://github.com/unfoldingWord/uw-word-count/issues/2). In brief:
-
-- This component should accept a DCS repository and generate a word count for that project. 
-- Examples that should work:
-  - https://git.door43.org/unfoldingWord/en_tn/
-  - https://git.door43.org/unfoldingWord/en_ta/
-- Input can be a URL.
-
-*This was refined to be:*
-
-- Allow the input URL to be any URL, not just to the repo. Thus these would be allowed:
-
-```
-https://git.door43.org/unfoldingWord/en_ta/
-https://git.door43.org/unfoldingWord/en_ta/translate
-https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor
-https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor/01.md
-```
-
-These would be rules:
-
-- If the URL is to the repo, then the resource type would be used to qualify what is counted. For example for en_ta, only the folder translate would be counted. The other folders would be ignored.
-- If the URL is to a folder within a repo, then the folder would be recursively processed and each "qualifying" file type counted.
-- A "qualifying" file type is one that has the expected extension for the type of resource.
-  - UTA, UTW: type is ".md"
-  - ULT, UST, and Original Language type is ".usfm"
-  - UTN is ".tsv" and only column 8 (? confirm)
-  - OBS looks like ".md"; possibly the other OBS resources are too?
-
-Finally, the URLs will be constrained to point to any DCS repo; in other
-words the URL must begin with `git.door43.org`
+## Specification using Gitea+Zip
 
 
-## Specification
+
+## Specification using Gitea trees API
+
+**Note: the Gitea trees API has a bug and does not work**
 
 *Input*: a URL
 
@@ -232,3 +203,38 @@ Processing: display of counts
 2. Do a word count on aggregated text
 3. Show the word count totals
 4. Show per-file word count details
+
+
+## Requirements
+
+Original requirements were given [here](https://github.com/unfoldingWord/uw-word-count/issues/2). In brief:
+
+- This component should accept a DCS repository and generate a word count for that project. 
+- Examples that should work:
+  - https://git.door43.org/unfoldingWord/en_tn/
+  - https://git.door43.org/unfoldingWord/en_ta/
+- Input can be a URL.
+
+*This was refined to be:*
+
+- Allow the input URL to be any URL, not just to the repo. Thus these would be allowed:
+
+```
+https://git.door43.org/unfoldingWord/en_ta/
+https://git.door43.org/unfoldingWord/en_ta/translate
+https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor
+https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor/01.md
+```
+
+These would be rules:
+
+- If the URL is to the repo, then the resource type would be used to qualify what is counted. For example for en_ta, only the folder translate would be counted. The other folders would be ignored.
+- If the URL is to a folder within a repo, then the folder would be recursively processed and each "qualifying" file type counted.
+- A "qualifying" file type is one that has the expected extension for the type of resource.
+  - UTA, UTW: type is ".md"
+  - ULT, UST, and Original Language type is ".usfm"
+  - UTN is ".tsv" and only column 8 (? confirm)
+  - OBS looks like ".md"; possibly the other OBS resources are too?
+
+Finally, the URLs will be constrained to point to any DCS repo; in other
+words the URL must begin with `git.door43.org`
