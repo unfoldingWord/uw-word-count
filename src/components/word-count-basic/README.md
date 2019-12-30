@@ -43,16 +43,30 @@ This function returns an object with the following attributes:
 - `validFormats`: list of supported formats
 - `isValidFormat`: a Boolean indicating whether the passed format is supported
 
+The input to the component may be provide in two ways:
+
+- As the value for the attribute `text`
+- As the `children` text value between the open and close of the component tag
+
+If both are provided, only the attribute value is taken for counting.
+
 ## Examples
 
 ### Simple Example
 
-The first example is a simple text string.
+The first example is a simple text string. This example uses the text in the children elements of the component (i.e., between the open and close tags).
 
 ```js
 <WordCountBasic format='string'>
 To be or not to be.
 </WordCountBasic>
+```
+
+This example uses the attribute `text` to provide the text to word count.
+
+```js
+let mytext = `that is the question`;
+<WordCountBasic format='string' text={mytext} />
 ```
 
 ### Markdown Example

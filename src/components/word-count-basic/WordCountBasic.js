@@ -48,13 +48,14 @@ const tableIcons = {
 
 function WordCountBasic({
   format,
+  text,
   classes,
   children,
   style,
 }) {
 
   console.log("format:",format); // format='xxx' format='string'
-  let results = wordCount(children,format);
+  let results = text ? wordCount(text,format): wordCount(children,format);
   if ( ! results.isValidFormat ) {
     return (
       <Typography className={classes.root} style={style} 

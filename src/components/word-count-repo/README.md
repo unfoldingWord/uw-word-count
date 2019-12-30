@@ -8,7 +8,7 @@ This is a component that counts the words for an entire repo or some subset.
 If the repo has a special content folder, then the request will be directed automatically to the content folder. For example, UTA has a content folder named `translate`. Thus the repo URL below will count the files only within that folder. Which makes this example and the next one identical.
 
 ```js
-<WordCountRepo url='https://git.door43.org/unfoldingWord/en_ta/' />
+<WordCountRepo url='https://git.door43.org/cecil.new/tD-DataRestructure' />
 ```
 
 #### Case 2 - to a folder within a repo
