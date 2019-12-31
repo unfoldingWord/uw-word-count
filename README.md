@@ -1,4 +1,4 @@
-[![Custom badge](https://img.shields.io/endpoint?color=%2374b9ff&url=https%3A%2F%2Fraw.githubusercontent.com%2unfoldingWord-box3%2Fhello-world-react-component-library%2Fmaster%2Fcoverage%2Fshields.json)]()
+[![Custom badge](https://img.shields.io/endpoint?color=%2374b9ff&url=https%3A%2F%2Fraw.githubusercontent.com%2unfoldingWord%2Fuw-word-count%2Fmaster%2Fcoverage%2Fshields.json)]()
 
 # Word Count React Component Library
 
