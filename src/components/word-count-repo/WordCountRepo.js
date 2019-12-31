@@ -17,9 +17,21 @@ function WordCountRepo({
   useEffect( () => {
     const fetchData = async () => {
       const result = await fetchWordCountRepo({ url: url });
+      console.log(result)
+      let keys = Array.from(Object.keys(result));
+      if ( keys.length === 0 ) {
+        setVal(
+          <div>
+            No matching files found!
+          </div>
+        )
+        return
+      }
       setVal(
         <div>
-          <pre>{result}</pre>
+          {keys.sort().map( mkey => (
+            <pre>{mkey}</pre>
+          ))}
         </div>
       );  
     };
@@ -52,3 +64,8 @@ const styles = theme => ({
 
 export default withStyles(styles)(WordCountRepo);
 
+/*
+          <pre>{result.map( mkey => ({mkey}))}</pre>
+
+
+*/

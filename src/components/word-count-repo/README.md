@@ -13,17 +13,32 @@ If the repo has a special content folder, then the request will be directed auto
 
 #### Case 2 - to a folder within a repo
 
-To a folder in a repo, in this case, `/translate`.
+To a folder in a repo.
 
-```txt
-<WordCountRepo url='https://git.door43.org/unfoldingWord/en_ta/translate' />
+```js
+<WordCountRepo url='https://git.door43.org/cecil.new/tD-DataRestructure/FutureState' />
 ```
 
 #### Case 3 - to a file within a repo
 
-To a file in a repo, in this case, `/translate/figs-metaphor/01.md`.
+To a file in a repo.
 
-```txt
-<WordCountRepo url='https://git.door43.org/unfoldingWord/en_ta/translate/figs-metaphor/01.md' />
+```js
+<WordCountRepo url='https://git.door43.org/cecil.new/tD-DataRestructure/CurrentState/cc_iso-3166.csv' />
 ```
 
+#### Case 4 - to an invalid repo
+
+To a non-existent repo.
+
+```js
+<WordCountRepo url='https://git.door43.org/thisisnotvalid' />
+```
+
+#### Case 5 - to an invalid file or folder within a repo
+
+To a non-existent file or folder.
+
+```js
+<WordCountRepo url='https://git.door43.org/cecil.new/CurrentState/notafile' />
+```
