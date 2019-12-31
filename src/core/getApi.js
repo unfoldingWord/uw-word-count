@@ -170,6 +170,12 @@ export async function get({uri, params}) {
   return data;
 };
 
+export async function getURL({uri, params}) {
+  console.log("getURL() uri,params:",uri,params);
+  const {data} = await api.get(uri, { params });
+  return data;
+};
+
 export async function fetchRepositoriesZipFiles({username, languageId, branch}) {
   const repositories = resourceRepositories({languageId});
   const promises = Object.values(repositories).map(repository => {

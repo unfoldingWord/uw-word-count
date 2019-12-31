@@ -51,7 +51,7 @@ function WordCountRepo({
 WordCountRepo.propTypes = {
   /** @ignore */
   classes: PropTypes.object,
-  /** The Book ID to package. */
+  /** The URL to a repo, folder, or file for word gounts. */
   url: PropTypes.string.isRequired,
    /** The overriding CSS for this component */
   style: PropTypes.object,
@@ -64,8 +64,3 @@ const styles = theme => ({
 
 export default withStyles(styles)(WordCountRepo);
 
-/*
-          <pre>{result.map( mkey => ({mkey}))}</pre>
-
-
-*/
