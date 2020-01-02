@@ -7,9 +7,10 @@ const baseURL = 'https://git.door43.org/';
 
 function getWordCounts(treeMap,errcount) {
     let allWords = [];
+    let allL1Counts = 0;
     for ( const [k,v] of treeMap.entries() ) {
         let sha = v.sha;
-        let uri = v.url;
+        //let uri = v.url;
         let blob = localStorage.getItem(sha);
         blob = JSON.parse(blob);
         let content;
@@ -18,7 +19,7 @@ function getWordCounts(treeMap,errcount) {
         } catch(error) {
             console.error("atob() Error on:",k," is:",error);
             errcount = errcount + 1;
-            return;
+            return errcount;
         }
         let ext = k.split('.').pop();
         let format = "string";
@@ -33,10 +34,20 @@ function getWordCounts(treeMap,errcount) {
         for (let i=0; i < results.allWords.length; i++) {
             allWords.push(results.allWords[i])
         }
-        console.log(k,"total:",results.total);
+        allL1Counts += results.l1count;
+        // now update the blob with word count results
+        blob.path          = k;
+        blob.total         = results.total;
+        blob.distinct      = results.distinct;
+        blob.l1count       = results.l1count;
+        blob.allWords      = results.allWords;
+        blob.wordFrequency = results.wordFrequency;
+        localStorage.setItem(sha,JSON.stringify(blob));
     }
     let results = wordCount(allWords.join('\n'),"string");
+    results.l1count = allL1Counts;
     console.log("Grand Total",results.total)
+    return results;
 }
 
 async function getBlobs(treeMap,errcount) {
@@ -57,11 +68,12 @@ async function getBlobs(treeMap,errcount) {
             console.error("getBlob() Error on:",k," is:",error);
             errcount = errcount + 1;
             data = null;
-            return;
+            return errcount;
         }
         console.log("get blob:",data);
         localStorage.setItem(sha,JSON.stringify(data));
     }
+    return errcount;
 }
 
 async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap,errcount) {
@@ -72,7 +84,7 @@ async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap,err
     } catch(error) {
         console.error("treeRecursion() Error",error);
         errcount = errcount + 1;
-        return;
+        return errcount;
     }
     let _tree = await result.json();
     let tree  = _tree.tree;
@@ -118,6 +130,7 @@ async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap,err
         treeMap.set(mkey,tree[i])
         traversalpath.pop();
     }
+    return errcount;
 }
 
 export async function fetchWordCountRepo({ url }) 
@@ -145,27 +158,31 @@ export async function fetchWordCountRepo({ url })
 
     // Step 1. Identify all files that need to be counted
     let treeMap = new Map();
-    await treeRecursion(owner,repo,sha,pathfilter,traversalpath,treeMap,errcount);
+    /*
+    The key will be the full path to the file.
+    The value will be an object like this:
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "size": 498,
+      "sha": "a8d3267bda97f7933e8ca2fe416d06f53ed05d77",
+      "url": "https://git.door43.org/api/v1/repos/cecil.new/tD-DataRestructure/git/blobs/a8d3267bda97f7933e8ca2fe416d06f53ed05d77"
+    }    
+
+    These values are iterated over and all the blobs are fetched, stored and
+    the words counted. The word counts are added to the blob and the blob
+    stored with the word count values.
+    */
+    errcount += await treeRecursion(owner,repo,sha,pathfilter,traversalpath,treeMap,errcount);
     console.log("treeMap",treeMap)
     // Step 2. Fetch all the identified files
-    await getBlobs(treeMap, errcount);
+    errcount += await getBlobs(treeMap, errcount);
     // Step 3. Do word counts on each identified file and grand totals
-    getWordCounts(treeMap, errcount);
+    let grandTotals = getWordCounts(treeMap, errcount);
     console.log("Number of errors",errcount);
-    return util.map_to_obj(treeMap);
+    let results = {};
+    results.grandTotals = grandTotals;
+    results.treeMap     = util.map_to_obj(treeMap);
+    return results;
 }
-
-
-/* Code graveyard
-
-    let owner = 'unfoldingword';
-    let repo  = 'en_ugl';
-    const repoTree = await gitApi.recursiveTree({
-        username: owner,
-        repository: repo,
-        path: '/',
-        sha: 'master'
-    });
-
-
-*/

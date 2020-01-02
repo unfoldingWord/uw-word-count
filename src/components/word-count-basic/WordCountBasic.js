@@ -90,7 +90,7 @@ function WordCountBasic({
         options={mt.options}
       />
     </Paper>
-);
+  );
 };
 
 WordCountBasic.propTypes = {
