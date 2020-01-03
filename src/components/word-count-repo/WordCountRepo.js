@@ -81,13 +81,6 @@ function WordCountRepo({
           </Typography>
           <MaterialTable
             icons={tableIcons}
-            title={aw.title}
-            columns={aw.columns}
-            data={aw.data}
-            options={aw.options}
-          />
-          <MaterialTable
-            icons={tableIcons}
             title={mt.title}
             columns={mt.columns}
             data={mt.data}
