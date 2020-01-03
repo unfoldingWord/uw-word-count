@@ -1,7 +1,7 @@
 {
   "name": "uw-word-count",
   "description": "Components for Counting Words.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": false,
   "homepage": "https://unfoldingword.github.io/uw-word-count/",
   "repository": {
