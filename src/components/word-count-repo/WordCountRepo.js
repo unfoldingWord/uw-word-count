@@ -55,20 +55,20 @@ function WordCountRepo({
   const [res, setVal] = useState("Waiting-WordCountRepo");
   useEffect( () => {
     const fetchData = async () => {
-      const result = await fetchWordCountRepo({ url: url });
-      //console.log(result)
-      let keys = Array.from(Object.keys(result.grandTotals));
-      if ( keys.length === 0 ) {
+      let result;
+      try {
+        result = await fetchWordCountRepo({ url: url });
+      } catch(error) {
         setVal(
           <div>
-            No matching files found!
+            {error.message}
           </div>
         )
-        return
       }
+      //console.log(result)
+      let keys = Array.from(Object.keys(result.grandTotals));
 
       // ok - we have results to show
-      console.log("wf",result.grandTotals.wordFrequency)
       let mt = util.wf_to_mt(result.grandTotals.wordFrequency);
       let aw = util.aw_to_mt(result.grandTotals.allWords);
       setVal (

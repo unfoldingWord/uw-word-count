@@ -23,6 +23,8 @@ To a folder in a repo.
 
 To a file in a repo.
 
+Harder case: https://git.door43.org/unfoldingword/en_ugl/content/G00010
+
 ```js
 <WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/README.md' />
 ```

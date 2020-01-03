@@ -2,24 +2,36 @@ import * as gitApi from '../../core/getApi';
 import * as util from '../../core/utilities';
 import Path from 'path';
 import { wordCount } from '../../core';
+import localforage from 'localforage';
 
 const baseURL = 'https://git.door43.org/';
 
-function getWordCounts(treeMap,errcount) {
+const wcstore = localforage.createInstance({
+    driver: [localforage.INDEXEDDB],
+    name: 'wc-store',
+});
+  
+
+async function getWordCounts(treeMap) {
     let allWords = [];
     let allL1Counts = 0;
     for ( const [k,v] of treeMap.entries() ) {
         let sha = v.sha;
         //let uri = v.url;
-        let blob = localStorage.getItem(sha);
+        let blob;
+        try {
+            blob = await wcstore.getItem(sha);
+        } catch (error) {
+            const err = "wcstore.getItem() Error:"+error;
+            throw new Error(err);
+        }
         blob = JSON.parse(blob);
         let content;
         try {
             content = atob(blob.content);
         } catch(error) {
-            console.error("atob() Error on:",k," is:",error);
-            errcount = errcount + 1;
-            return errcount;
+            const err = "atob() Error on:"+k+" is:"+error;
+            throw new Error(err);
         }
         let ext = k.split('.').pop();
         let format = "string";
@@ -42,7 +54,13 @@ function getWordCounts(treeMap,errcount) {
         blob.l1count       = results.l1count;
         blob.allWords      = results.allWords;
         blob.wordFrequency = results.wordFrequency;
-        localStorage.setItem(sha,JSON.stringify(blob));
+        try {
+            await wcstore.setItem(sha,JSON.stringify(blob));
+        } catch (error) {
+            const err = "wcstore.setItem() Error:"+error;
+            throw new Error(err);
+        }
+        console.log(k," Totals:",results.total)
     }
     let results = wordCount(allWords.join('\n'),"string");
     results.l1count = allL1Counts;
@@ -50,47 +68,56 @@ function getWordCounts(treeMap,errcount) {
     return results;
 }
 
-async function getBlobs(treeMap,errcount) {
+async function getBlobs(treeMap) {
     let data = [];
+    const params = 'per_page=9999'
     for ( const [k,v] of treeMap.entries() ) {
         let sha = v.sha;
         let uri = v.url;
+        uri += '?per_page=99999'
         // test for already fetched
-        let x = localStorage.getItem(sha);
+        let x;
+        try {
+            x = await wcstore.getItem(sha);
+        } catch (error) {
+            const err = "wcstore.getItem() Error:" + error;
+            throw new Error(err);
+        }
         if ( x !== null ) {
-            console.log("Already fetched:",sha,uri);
+            // already have it - no need to fetch
             continue;
         }
-        console.log("fetching sha,url",sha,uri)
         try {
             data = await gitApi.getURL({uri});    
         } catch(error) {
-            console.error("getBlob() Error on:",k," is:",error);
-            errcount = errcount + 1;
-            data = null;
-            return errcount;
+            const err = "getBlob() Error on:"+k+" is:"+error;
+            throw new Error(err);
         }
-        console.log("get blob:",data);
-        localStorage.setItem(sha,JSON.stringify(data));
+        try {
+            await wcstore.setItem(sha,JSON.stringify(data));
+        } catch (error) {
+            const err = "wcstore.setItem() Error:"+error;
+            throw new Error(err);
+        }
     }
-    return errcount;
 }
 
-async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap,errcount) {
+async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap) {
     const uri = Path.join('api/v1/repos', owner, repo, 'git/trees', sha);
     let result;
     try {
         result = await fetch(baseURL+uri);
     } catch(error) {
-        console.error("treeRecursion() Error",error);
-        errcount = errcount + 1;
-        return errcount;
+        const err = "treeRecursion() Error:"+error;
+        console.error(err);
+        throw new Error(err);
     }
     let _tree = await result.json();
     let tree  = _tree.tree;
     for ( let i=0; i < tree.length; i++ ) {
         let tpath = tree[i].path;
         traversalpath.push(tpath)
+        console.log("Traversal:",traversalpath.join('/'))
         if ( filterpath !== [] ) {
             // Here we see if the need to prune the tree
             // by only traversing where the user input directs us
@@ -130,15 +157,18 @@ async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap,err
         treeMap.set(mkey,tree[i])
         traversalpath.pop();
     }
-    return errcount;
+    if ( treeMap.size === 0 ) {
+        const err = "No matching files with provided URL";
+        throw new Error(err);
+    }
+    return;
 }
 
 export async function fetchWordCountRepo({ url }) 
 {
     if ( ! url.startsWith(baseURL) ) {
-        return "URL must begin with "+baseURL;
+        throw new Error("URL must begin with "+baseURL);
     }
-    let errcount = 0;
     let lengthOfBaseURL = baseURL.length;
     let ownerRepoPath   = url.substring(lengthOfBaseURL);
     let ownerEnd        = ownerRepoPath.indexOf('/');
@@ -152,9 +182,6 @@ export async function fetchWordCountRepo({ url })
     }
     const sha           = 'master';
     let traversalpath   = [];
-    console.log("owner=",owner, ownerEnd); 
-    console.log("repo =",repo, repoEnd);
-    console.log("pathfilter =",pathfilter);
 
     // Step 1. Identify all files that need to be counted
     let treeMap = new Map();
@@ -174,13 +201,11 @@ export async function fetchWordCountRepo({ url })
     the words counted. The word counts are added to the blob and the blob
     stored with the word count values.
     */
-    errcount += await treeRecursion(owner,repo,sha,pathfilter,traversalpath,treeMap,errcount);
-    console.log("treeMap",treeMap)
+    await treeRecursion(owner,repo,sha,pathfilter,traversalpath,treeMap);
     // Step 2. Fetch all the identified files
-    errcount += await getBlobs(treeMap, errcount);
+    await getBlobs(treeMap);
     // Step 3. Do word counts on each identified file and grand totals
-    let grandTotals = getWordCounts(treeMap, errcount);
-    console.log("Number of errors",errcount);
+    let grandTotals = await getWordCounts(treeMap);
     let results = {};
     results.grandTotals = grandTotals;
     results.treeMap     = util.map_to_obj(treeMap);
