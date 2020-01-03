@@ -60,7 +60,7 @@ async function getWordCounts(treeMap) {
             const err = "wcstore.setItem() Error:"+error;
             throw new Error(err);
         }
-        console.log(k," Totals:",results.total)
+        //console.log(k," Totals:",results.total)
     }
     let results = wordCount(allWords.join('\n'),"string");
     results.l1count = allL1Counts;
@@ -117,7 +117,7 @@ async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap) {
     for ( let i=0; i < tree.length; i++ ) {
         let tpath = tree[i].path;
         traversalpath.push(tpath)
-        console.log("Traversal:",traversalpath.join('/'))
+        //console.log("Traversal:",traversalpath.join('/'))
         if ( filterpath !== [] ) {
             // Here we see if the need to prune the tree
             // by only traversing where the user input directs us
@@ -201,13 +201,17 @@ export async function fetchWordCountRepo({ url })
     the words counted. The word counts are added to the blob and the blob
     stored with the word count values.
     */
+    console.log("treeRecursion() at ",Date.now())
     await treeRecursion(owner,repo,sha,pathfilter,traversalpath,treeMap);
     // Step 2. Fetch all the identified files
+    console.log("getBlobs() at ",Date.now())
     await getBlobs(treeMap);
     // Step 3. Do word counts on each identified file and grand totals
+    console.log("getWordCounts() at ",Date.now())
     let grandTotals = await getWordCounts(treeMap);
     let results = {};
     results.grandTotals = grandTotals;
     results.treeMap     = util.map_to_obj(treeMap);
+    console.log("Done at ",Date.now())
     return results;
 }
