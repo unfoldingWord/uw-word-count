@@ -23,7 +23,16 @@ To a folder in a repo.
 
 To a file in a repo.
 
-Harder case: https://git.door43.org/unfoldingword/en_ugl/content/G00010
+Harder case: https://git.door43.org/unfoldingword/en_ugl/content/
+- Timing: 27m (total start to finish)
+- Split: Tree traversal: 15m30s, fetch & count: 11m30s
+- Total words: 517932
+- Distinct words: 20035
+- Level 1 Headings: 6201
+
+A second run, with same URL, but with files cached:
+- Timing: 16m30s (total start to finish)
+- Split: Tree traversal: 15m35s, remainder: 55s
 
 ```js
 <WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/README.md' />
