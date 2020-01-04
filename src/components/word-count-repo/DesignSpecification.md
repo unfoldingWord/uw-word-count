@@ -1,12 +1,8 @@
 # Design Specification for the Repo Word Count Component
 
-## Specification using Gitea+Zip
-
-
-
 ## Specification using Gitea trees API
 
-**Note: the Gitea trees API has a bug and does not work**
+**Note: the Gitea trees API has a bug and does not work. Instead, the tree is processed recursievely to produce the needed information for filtering and fetching.**
 
 *Input*: a URL
 
@@ -18,11 +14,9 @@ There are three cases to handle:
 
 ### Validation of URL
 
-**Part 1** Validate DCS and `unfoldingWord` ownership
+**Part 1** Validate DCS
 
-The first step is to validate the URL. Given the owner constraint, we can simply test that the URL begins with:
-`https://git.door43.org/`.
-The URL scheme (`https://`) is not required.
+The first step is to validate the URL. Given the owner constraint, we can simply test that the URL begins with `https://git.door43.org/`.
 
 **Part 2** Validate the repo and path
 
@@ -88,9 +82,9 @@ Some resource types in the repos have special root folders that have the content
 
 - `uta`: the content folder is `/translate`
 
-If only the repo is provided and the content is in a folder, then only that folder will be fetched and counted.
+If only the repo is provided and the content is in a folder, then only that folder will be fetched and counted. (**Not yet implemented**)
 
-Furthermore, each resource type has a document authoring format. For example, Markdown `.md` is used for UTQ. Thus only Markdown files will be fetched and counted.
+Furthermore, each resource type has a document authoring format. For example, Markdown `.md` is used for UTQ. Thus only Markdown files will be fetched and counted. (**Not yet implemented**)
 
 All files must be fetched and the text aggregated for subsequent counting.
 The fetching and counting process is explained in more detail below.
@@ -133,29 +127,28 @@ The case for an individual file is a subset of the above.
 
 ## Caching Strategy
 
-The "cache" will be either `localStorage` or `sessionStorage`. The cache will be consulted before a file is fetched to see if it is already present. If so, the file will be returned from cache instead of fetching.
+A cache will be used, based on `indexedDB`. The cache will be consulted before a file is fetched to see if it is already present. If so, the file will be returned from cache instead of fetching.
 
-The process to maintain the cache is as follows. The word "store" is used to describe storage in either `localStorage` or `sessionStorage`. 
+The process to maintain the cache is as follows.
 
 - Store the `trees` output with a key being the name of the repo.
-- If repo commit hash is not current (from the `branches` API) or the `trees` data for the repo doesn't exist, then fetch the tree.
+- If repo commit hash is not current (from the `branches` API) or the `trees` data for the repo doesn't exist, then fetch the tree. (**These first two steps are not implementd**)
 - Store all blobs/files using the SHA as the key.
 - If the SHA is present in storage return stored copy; otherwise fetch the data, then store.
 
 ## Detailed Logic
 
-This section showd at a high level
-the logic used to identify, fetch, count, and display results.
+This section shows at a high level the logic used to identify, fetch, count, and display results.
 
-Here is a concise statement:
+Here is a concise overview:
 
 1. Extract the owner/repo from input URL 
 2. Use trees API on the repo (call this the repo tree)
 3. Validate the input URL against the repo tree
 4. While validating collect all matching URLs that need to be fetched/counted
 5. Fetch all the URLs and ...
-6. Store all the content somewhere so it can be aggregated later for the totals
-7. Once all content is retrieved, iterate over it, saving somewhere for display both the totals across all matching content and per-file totals 
+6. Store all the content in cache so it may be aggregated later for the totals
+7. Once all content is retrieved, iterate over it, saving for display both the totals across all matching content and per-file totals. The cached blob will be augmented with the word count data and re-stored in cache.
 8. Finally, using computed results, display in UI
 
 ### Identify
@@ -164,7 +157,7 @@ Here is a concise statement:
 - Output: an array of document blob URLs for qualifying blobs
   - Note 1: the array must actually be an object containg the blob URL and the path, which is needed for display of results in the UI
 
-Processing: of URL to find all qualifying documents.
+Processing: of URL to find all qualifying documents. (**Note: the management of the tree in the first few steps below is not yet implemented**)
 
 1. Isolate the owner and repo elements from the URL.
 1. Use the `branches` Gitea API to obtain repo information about the master branch.
@@ -194,15 +187,15 @@ Processing: storage of all documents with counts added.
 
 ### Display
 
-- Input: array of objects containing path and SHA
-- Output: display of totals and per-file counts
+- Input: array of objects containing path and SHA (*Actual implementations uses a Map, converted to an object*)
+- Output: display of totals
 
 Processing: display of counts
 
 1. Iterate thru all files (using SHA as item key in storage), aggregating all text
 2. Do a word count on aggregated text
 3. Show the word count totals
-4. Show per-file word count details
+4. Show per-file word count details (*Not implemented*)
 
 
 ## Requirements

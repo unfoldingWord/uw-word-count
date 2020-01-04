@@ -10,7 +10,7 @@ is `markdown`. As of this writing, supported formats are:
 - `markdown`
 - `string`
 - `usfm`
-- `utn`
+- `utn` (a tab separated value format)
 
 Here are selected pre-processing examples for Markdown:
 - All links, image refs, embedded HTML are removed.
