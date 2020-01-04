@@ -21,16 +21,12 @@ To a folder in a repo.
 
 To a file in a repo.
 
-Harder case: https://git.door43.org/unfoldingword/en_ugl/content
-- Timing: 27m (total start to finish)
-- Split: Tree traversal: 15m30s, fetch & count: 11m30s
-- Total words: 517932
-- Distinct words: 20035
-- Level 1 Headings: 6201
+Performance notes for: https://git.door43.org/unfoldingword/en_ugl/content
+- treeRecursion() at  1578143924122 -- 15.6m
+- getBlobs()      at  1578144861461 --  4.4s (cached); 11m30s (no cached)
+- getWordCounts() at  1578144865890 -- 49.7s
+- Done            at  1578144915682 
 
-A second run, with same URL, but with files cached:
-- Timing: 16m30s (total start to finish)
-- Split: Tree traversal: 15m35s, fetch & count: 55s
 
 ```js
 <WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/README.md' />
