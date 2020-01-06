@@ -114,18 +114,20 @@ async function treeRecursion(owner,repo,sha,filterpath,traversalpath,treeMap) {
     }
     let _tree = await result.json();
     let tree  = _tree.tree;
+    
+    let max = filterpath.length;
+    if ( max === undefined ) max = 0;
+
     for ( let i=0; i < tree.length; i++ ) {
         let tpath = tree[i].path;
         traversalpath.push(tpath)
         //console.log("Traversal:",traversalpath.join('/'))
-        if ( filterpath !== [] ) {
+        if ( max !== 0 ) {
             // Here we see if the need to prune the tree
             // by only traversing where the user input directs us
 
             // first get the min of input filter array size
             // and the traversal array size
-            let max = filterpath.length;
-            if ( max === undefined ) max = 0;
             let tsize = traversalpath.length;
             if ( tsize === undefined ) tsize = 0;
             if ( tsize < max ) {
