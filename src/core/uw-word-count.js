@@ -93,6 +93,8 @@ function getMdWords(str) {
     s = s.replace(/<!--.*?-->/g, ' ');
     // remove all html tags
     s = s.replace(/<.*?>(.*?)<\/.*?>/g,'$1');
+    // remove bare URLs
+    s = s.replace(/http.?:\/\/.*\s/g, ' ');
     // handle numbers with colons between them
     s = s.replace(/(\d+):(\d+)/g, '$1_COLON_$2'); 
     // handle numbers with dashes between them

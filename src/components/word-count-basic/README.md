@@ -13,7 +13,7 @@ is `markdown`. As of this writing, supported formats are:
 - `utn` (a tab separated value format)
 
 Here are selected pre-processing examples for Markdown:
-- All links, image refs, embedded HTML are removed.
+- All links, image refs, embedded HTML are removed. *This includes bare URLs; see Markdown example below*
 - In order to treat Scripture references (3:16), time (4:00), 
 and floating point numbers as one "word", the colon and periods are changed
 to text: "colon", "dash", and "decimal".
@@ -96,6 +96,8 @@ A URL:
 [www.google.com](www.google.com)
 
 # Heading 1
+
+https://github.com/
 
 ## Heading 2
 

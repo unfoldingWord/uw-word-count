@@ -19,17 +19,20 @@ To a folder in a repo.
 
 #### Case 3 - to a file within a repo
 
-To a file in a repo.
-
-Performance notes for: https://git.door43.org/unfoldingword/en_ugl/content
-- treeRecursion() at  1578143924122 -- 15.6m
-- getBlobs()      at  1578144861461 --  4.4s (cached); 11m30s (no cached)
-- getWordCounts() at  1578144865890 -- 49.7s
-- Done            at  1578144915682 
-
+To a file in a repo that has expected filetype:
 
 ```js
 <WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/README.md' />
+```
+
+To a file in a repo that does not have the expected filetype. This will work since the desired file is explicitly specified and will override the normal constraints. USFM and UTN/TSV examples:
+
+```js
+<WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/folder1/jud.usfm' />
+```
+
+```js
+<WordCountRepo url='https://git.door43.org/cecil.new/word-count-test-repo/folder1/titus.tsv' />
 ```
 
 #### Case 4 - to an invalid repo
