@@ -66,12 +66,12 @@ function WordCountRepo({
         )
         return;
       }
-      //console.log(result)
+      console.log(result)
       let keys = Array.from(Object.keys(result.grandTotals));
 
       // ok - we have results to show
       let mt = util.wf_to_mt(result.grandTotals.wordFrequency);
-      let aw = util.aw_to_mt(result.grandTotals.allWords);
+      //let aw = util.aw_to_mt(result.grandTotals.allWords);
       setVal (
         <Paper className={classes.paper}>
           <Typography className={classes.root} style={style}>
