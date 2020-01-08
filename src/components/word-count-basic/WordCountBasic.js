@@ -67,21 +67,14 @@ function WordCountBasic({
     )
   }
   let mt = util.wf_to_mt(results.wordFrequency);
-  let aw = util.aw_to_mt(results.allWords);
+  //let aw = util.aw_to_mt(results.allWords);
   return (
     <Paper className={classes.paper}>
       <Typography className={classes.root} style={style}>
-        Total number of words: {results.total} <br/>
-        Distinct number of words: {results.distinct} <br/> 
-        Number of Markdown Level 1 Headings: {results.l1count}
+        Total number of words: <strong>{results.total}</strong> <br/>
+        Distinct number of words: <strong>{results.distinct}</strong> <br/> 
+        Number of Markdown Level 1 Headings: <strong>{results.l1count}</strong>
       </Typography>
-      <MaterialTable
-        icons={tableIcons}
-        title={aw.title}
-        columns={aw.columns}
-        data={aw.data}
-        options={aw.options}
-      />
       <MaterialTable
         icons={tableIcons}
         title={mt.title}

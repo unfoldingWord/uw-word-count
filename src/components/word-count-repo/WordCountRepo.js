@@ -75,9 +75,9 @@ function WordCountRepo({
       setVal (
         <Paper className={classes.paper}>
           <Typography className={classes.root} style={style}>
-            Total number of words: {result.grandTotals.total} <br/>
-            Distinct number of words: {result.grandTotals.distinct} <br/> 
-            Number of Markdown Level 1 Headings: {result.grandTotals.l1count}
+            Total number of words: <strong>{result.grandTotals.total}</strong> <br/>
+            Distinct number of words: <strong>{result.grandTotals.distinct}</strong> <br/> 
+            Number of Markdown Level 1 Headings: <strong>{result.grandTotals.l1count}</strong>
           </Typography>
           <MaterialTable
             icons={tableIcons}
