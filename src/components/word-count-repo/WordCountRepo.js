@@ -66,7 +66,6 @@ function WordCountRepo({
         )
         return;
       }
-      console.log(result)
       let keys = Array.from(Object.keys(result.grandTotals));
 
       // ok - we have results to show

@@ -64,7 +64,6 @@ async function getWordCounts(treeMap) {
     }
     let results = wordCount(allWords.join('\n'),"string");
     results.l1count = allL1Counts;
-    console.log("Grand Total",results.total)
     return results;
 }
 
@@ -238,18 +237,18 @@ export async function fetchWordCountRepo({ url })
     } else if ( repo.endsWith('_uhb') || repo.endsWith('_ugnt') || repo.endsWith('_ult') || repo.endsWith('_ust') ) {
         filetype = 'usfm';
     }
-    console.log("Repo expected filetype:",filetype);
-    console.log("treeRecursion() at ",Date.now())
+    //console.log("Repo expected filetype:",filetype);
+    //console.log("treeRecursion() at ",Date.now())
     await treeRecursion(owner,repo,sha,pathfilter,filetype,traversalpath,treeMap);
     // Step 2. Fetch all the identified files
-    console.log("getBlobs() at ",Date.now())
+    //console.log("getBlobs() at ",Date.now())
     await getBlobs(treeMap);
     // Step 3. Do word counts on each identified file and grand totals
-    console.log("getWordCounts() at ",Date.now())
+    //console.log("getWordCounts() at ",Date.now())
     let grandTotals = await getWordCounts(treeMap);
     let results = {};
     results.grandTotals = grandTotals;
     results.treeMap     = util.map_to_obj(treeMap);
-    console.log("Done at ",Date.now())
+    //console.log("Done at ",Date.now())
     return results;
 }
