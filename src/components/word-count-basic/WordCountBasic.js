@@ -66,7 +66,7 @@ function WordCountBasic({
       </Typography>
     )
   }
-  let mt = util.wf_to_mt(results.wordFrequency);
+          let mt = util.wf_to_mt(results.wordFrequency);
   //let aw = util.aw_to_mt(results.allWords);
   return (
     <Paper className={classes.paper}>
