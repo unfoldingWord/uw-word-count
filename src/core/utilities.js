@@ -36,7 +36,7 @@ export const wf_to_mt = ( ob => {
         mt.data.push({ word: w, count: ob[w] })
     })
 
-    mt.options = { sorting: true, exportButton: true };
+    mt.options = { sorting: true, exportButton: true, exportAllData: true };
 
     return mt;
 });
