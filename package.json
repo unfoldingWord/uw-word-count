@@ -44,7 +44,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-styleguidist": "^9.1.14",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "url-loader": "^2.1.0",
     "usfm-js": "^2.0.0"
   },
